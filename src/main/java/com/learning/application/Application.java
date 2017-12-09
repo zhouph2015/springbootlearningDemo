@@ -4,6 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
  
+/**
+ * @author Peter Zhou
+ *
+ */
  
 @SpringBootApplication(scanBasePackages={"com.learning"}, exclude = JpaRepositoriesAutoConfiguration.class)
 public class Application {

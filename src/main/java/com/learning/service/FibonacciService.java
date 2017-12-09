@@ -3,8 +3,13 @@ package com.learning.service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Peter Zhou
+ *
+ */
+
 public class FibonacciService {
-	
+
 	public List<Integer> getFirstNthFibonacci(int number) {
 		List<Integer> results = new ArrayList<Integer>();
 
@@ -30,5 +35,4 @@ public class FibonacciService {
 			return results;
 		}
 	}
-
 }

@@ -3,7 +3,11 @@ package com.learning.util;
 import java.lang.management.ThreadInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+/**
+ * @author Peter Zhou
+ *
+ */
 
 public class DeadlockRESTFulHandler implements DeadlockHandler {
 
@@ -14,7 +18,6 @@ public class DeadlockRESTFulHandler implements DeadlockHandler {
 			StringBuilder info = new StringBuilder();
 			info.append("Sorry, Deadlock detected!");
 
-			Map<Thread, StackTraceElement[]> stackTraceMap = Thread.getAllStackTraces();
 			for (ThreadInfo threadInfo : deadlockedThreads) {
 
 				if (threadInfo != null) {
@@ -23,8 +26,6 @@ public class DeadlockRESTFulHandler implements DeadlockHandler {
 
 						if (thread.getId() == threadInfo.getThreadId()) {
 							info.append(threadInfo.toString().trim());
-					
-
 							for (StackTraceElement ste : thread.getStackTrace()) {
 								info.append(ste.toString().trim());
 							}

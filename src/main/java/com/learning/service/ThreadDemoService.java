@@ -2,43 +2,40 @@ package com.learning.service;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import com.learning.util.DeadlockRESTFulHandler;
 import com.learning.util.DeadlockDetector;
 
+/**
+ * @author Peter Zhou
+ *
+ */
 public class ThreadDemoService {
 
-	
-	 public static Object money = new Object(); 
-	 public static Object car = new Object();
-	 
-	 public List<String> monitoringDeadLock(int time) throws InterruptedException {
-		 DeadlockDetector deadlockDetector = new DeadlockDetector(new DeadlockRESTFulHandler(), 5, TimeUnit.SECONDS);
-		 deadlockDetector.start();
-        
-		 sale(10000);
-		 List<String> response = deadlockDetector.monitoringDeadlock();
-		 
-		 return response;
-		 
-	 }
-	 
+	public static Object money = new Object();
+	public static Object car = new Object();
+
+	public List<String> monitoringDeadLock(int time) throws InterruptedException {
+		DeadlockDetector deadlockDetector = new DeadlockDetector(new DeadlockRESTFulHandler(), 5, TimeUnit.SECONDS);
+		deadlockDetector.start();
+
+		sale(10000);
+		List<String> response = deadlockDetector.monitoringDeadlock();
+
+		return response;
+
+	}
 
 	public static void sale(long millsecond) throws InterruptedException {
-	
-		
-		buyer buyer1 = new buyer(money,car);
+
+		buyer buyer1 = new buyer(money, car);
 		Thread t1 = new Thread(buyer1);
 		t1.start();
-		
-		seller buyer2 = new seller(money,car);
+
+		seller buyer2 = new seller(money, car);
 		Thread t2 = new Thread(buyer2);
 		t2.start();
-		
+
 		Thread.sleep(millsecond);
-		
-		
 
 	}
 
@@ -57,7 +54,7 @@ class buyer implements Runnable {
 
 	@Override
 	public void run() {
-			sale();
+		sale();
 	}
 
 	public void sale() {
@@ -71,9 +68,8 @@ class buyer implements Runnable {
 				e.printStackTrace();
 			}
 			synchronized (car) {
-			System.out.println("I will not pay money without received car first");
+				System.out.println("I will not pay money without received car first");
 			}
-
 		}
 		System.out.println("I received car, and payed money");
 	}
@@ -92,7 +88,7 @@ class seller implements Runnable {
 
 	@Override
 	public void run() {
-			sale();
+		sale();
 	}
 
 	public void sale() {
@@ -104,12 +100,11 @@ class seller implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			synchronized (money) {
-
 			}
-			
+
 		}
-		System.out.println("I received money, and transfered the car");;
+		System.out.println("I received money, and transfered the car");
+		;
 	}
 }
